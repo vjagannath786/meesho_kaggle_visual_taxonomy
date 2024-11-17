@@ -58,11 +58,7 @@ def create_dataset():
     ### Final dataset to train
     df = train.dropna()
 
-    #df_new = pd.read_csv('/dbfs/FileStore/filled_sarees.csv')
-
-    #df = pd.concat([df_old, df_new], axis=0)
-
-    #print(df.shape)
+    
 
 
     
