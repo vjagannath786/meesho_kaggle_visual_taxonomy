@@ -6,14 +6,15 @@ import datasets
 from tqdm import tqdm
 from PIL import Image
 import ast
+import config
 
 ####
 
 
-def Inference(merged_path):
+def run_inference(merged_path):
 
 
-    path = '/home/visual-taxonomy'
+    path = config.data_path
 
     test = pd.read_csv(os.path.join(path, 'test.csv'))
 
@@ -101,4 +102,4 @@ def Inference(merged_path):
 
 if __name__ == "__main__":
 
-    preds = Inference('./ml/merged_v1')
+    preds = run_inference(config.merged_model_path)
