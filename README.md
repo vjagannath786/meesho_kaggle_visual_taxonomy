@@ -20,6 +20,8 @@ This repository is designed for training and inference on the Meesho Kaggle Visu
 
 ## **Usage**
 
+### Please note code best runs with A100 GPU's
+
 ### **Training**
 #### **Single GPU**
 Run the following command to train the model on a single GPU:
