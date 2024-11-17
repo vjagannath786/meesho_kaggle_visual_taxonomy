@@ -55,6 +55,7 @@ Your project should follow this structure:
 meesho_kaggle_visual_taxonomy/
 │
 ├── data/                   # Dataset directory
+├── adapters/               # adapter directory where adapter is saved
 ├── models/                 # Pre-trained models directory
 ├── training.py             # Training script
 ├── inference.py            # Inference script
