@@ -1,0 +1,8 @@
+scikit-learn
+transformers
+datasets
+accelerate==0.34.2
+peft
+bitsandbytes
+vllm==0.6.1.post1
+flash-attn==2.6.3
