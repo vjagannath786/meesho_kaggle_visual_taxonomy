@@ -38,7 +38,8 @@ def Inference(merged_path):
         trust_remote_code=True,
         max_num_seqs=10,
         dtype='half',
-        max_model_len=5000
+        max_model_len=5000,
+        tensor_parallel_size=2
     )
 
     # Output file for results
