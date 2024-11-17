@@ -25,6 +25,7 @@ from tqdm import tqdm
 from sklearn.metrics import f1_score
 import subprocess
 import ast
+import config
 
 torch.manual_seed(2024)
 
@@ -32,7 +33,7 @@ torch.manual_seed(2024)
 
 
 
-path = '/home/visual-taxonomy'
+path = config.data_path
 
 def create_dataset():
     
@@ -469,13 +470,13 @@ def main():
 
 
     args = {
-    'model_name_or_path': 'microsoft/Phi-3.5-vision-instruct',
+    'model_name_or_path': config.model_id,
     'use_flash_attention': True,
     'bf16': True,
     'use_lora': True,
     'use_qlora': False,
-    'output_dir': '/home/ml/output_A100_batch2/',
-    'batch_size': 16,
+    'output_dir': config.adapter_path,
+    'batch_size': 4,
     'num_crops': 16,
     'num_train_epochs': 1,
     'learning_rate': 3e-5,
@@ -513,6 +514,7 @@ def main():
     print(f'training on {num_gpus} GPUs')
     assert args['batch_size'] % num_gpus == 0, 'Batch size must be divisible by the number of GPUs'
     gradient_accumulation_steps = args['batch_size'] // num_gpus
+    
     if args['bf16']:
         fp16 = False
         bf16 = True
@@ -530,7 +532,7 @@ def main():
         per_device_eval_batch_size=1,
         gradient_checkpointing=True,
         gradient_checkpointing_kwargs={'use_reentrant': False},  # NOTE important for LoRA
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=gradient_accumulation_steps,
         optim='adamw_torch',
         adam_beta1=0.9,
         adam_beta2=0.95,
@@ -545,8 +547,8 @@ def main():
         save_strategy='no',
         save_total_limit=10,
         save_only_model=True,
-        bf16=True,
-        fp16=False,
+        bf16=bf16,
+        fp16=fp16,
         remove_unused_columns=False,
         report_to='none',
         dataloader_num_workers=4,
@@ -609,7 +611,7 @@ def main():
     
     print('save completed')
 
-    merged_path = '/home/ml/merged_v1'
+    merged_path = config.merged_model_path
 
     base_model = create_model(
             args['model_name_or_path'],
@@ -645,6 +647,6 @@ if __name__ == "__main__":
 
     #mp.set_start_method('spawn')
 
-    score = evaluate('/home/ml/merged_v1', val_df)
+    score = evaluate(output, val_df)
 
     print(score)
