@@ -179,13 +179,7 @@ class DataCollator:
             )['input_ids']
             input_ids = torch.cat([prompt_input_ids, answer_input_ids], dim=1)
             ignore_index = -100
-            # labels = torch.cat(
-            #     [
-            #         torch.tensor([ignore_index] * len(prompt_input_ids[0])).unsqueeze(0),
-            #         answer_input_ids,
-            #     ],
-            #     dim=1,
-            # )
+            
             labels = torch.cat([torch.full((1, len(prompt_input_ids[0])), IGNORE_INDEX), 
                                 answer_input_ids], dim=1)
 

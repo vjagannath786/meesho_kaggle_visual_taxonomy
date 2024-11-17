@@ -4,5 +4,6 @@ datasets
 accelerate==0.34.2
 peft
 bitsandbytes
+torchvision==0.19.1
 vllm==0.6.1.post1
 flash-attn==2.6.3
